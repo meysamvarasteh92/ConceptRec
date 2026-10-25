@@ -64,5 +64,6 @@ python run_conceptrec.py \
 After training both the backbone and ConceptRec:
 
 - **RQ1 & RQ2:** Run `Steering.ipynb` to evaluate reconstruction fidelity and concept alignment.
-- **RQ3:** Run `steering_concept_all.py` to evaluate concept steering effectiveness.
+- **RQ3:** Run `steering_concept_all.py` to evaluate concept steering effectiveness (Push-Pull)
+
 
