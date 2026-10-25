@@ -8,7 +8,7 @@ This repository contains the code for **ConceptRec**, a post-hoc framework for i
 ## Framework
 
 <p align="center">
-  <img src="conceptrec.png" width="850">
+  <img src="conceptrec.png" width="850" alt="ConceptRec Framework">
 </p>
 
 <p align="center">
