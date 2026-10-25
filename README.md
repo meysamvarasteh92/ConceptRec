@@ -44,4 +44,25 @@ deactivate
 - **Baselines:** IaSAE and RecSAE.
 - **Evaluation:** nDCG@10, RBO@10, representation similarity, concept alignment, and Push-Pull steering.
 
-The repository covers concept construction, model training, and evaluation for the experiments reported in the paper.
+## Training and Evaluation
+
+### Training ConceptRec
+
+To train ConceptRec, first train the backbone recommender, then run:
+
+```bash
+python run_conceptrec.py \
+    --dataset ml-1m \
+    --config ConceptRec_config.yaml \
+    --lambda_concept 1.0 \
+    --lambda_recon 2.0 \
+    --epochs 3000
+```
+
+### Evaluation and Steering
+
+After training both the backbone and ConceptRec:
+
+- **RQ1 & RQ2:** Run `Steering.ipynb` to evaluate reconstruction fidelity and concept alignment.
+- **RQ3:** Run `steering_concept_all.py` to evaluate concept steering effectiveness.
+
