@@ -1,0 +1,70 @@
+# Inherits base SASRec config
+dataset: ml-1m
+#data_path: './dataset/'
+model: SASRec_CBM
+
+# SASRec architecture (must match the base checkpoint)
+hidden_size: 128
+## 64 for beeradvocate
+n_layers: 2
+n_heads: 2
+inner_size: 256
+hidden_dropout_prob: 0
+attn_dropout_prob: 0
+hidden_act: gelu
+## is 30 for lastfm 
+MAX_ITEM_LIST_LENGTH: 50
+loss_type: CE
+layer_norm_eps: 1.0e-12          
+
+initializer_range: 0.02
+seed : 2020
+steer_concept_idx: null
+
+download: False
+
+# CBM-specific
+#base_path: saved/SASRec-lastfm_final.pth
+#base_path: saved/SASRec-beeradvocate_hiddensize64.pth
+base_path: saved/sasrec_ml-1m.pth
+#base_path: saved/SASRec-beeradvocate_hiddensize64.pth
+#SASRec-lastfm_128.pth
+#SASRec-Jun-29-2026_14-04-27.pth
+# Steering (null during training, set at eval)
+#steer_concept_idx: null
+steer_scale: 1
+
+# Training
+epochs: 300
+train_batch_size: 2048
+learner: adam
+learning_rate: 1.0e-3     
+stopping_step: 300
+
+# Eval
+metrics: ['Recall', 'NDCG', 'MRR', 'Hit', 'ItemCoverage', 'ItemCoverageN', 'GiniIndex', 'AveragePopularity']
+topk: [ 10, 20]
+valid_metric: NDCG@10
+
+eval_batch_size: 4096
+eval_args:
+  split: {LS: valid_and_test}
+  order: TO
+  group_by: user
+  mode: {valid: full, test: full}
+
+# Data
+load_col:
+  inter: [user_id, item_id, rating, timestamp]
+
+#train_neg_sample_args: {'distribution': 'none', 'sample_num': 'none', 'alpha': 'none', 'dynamic': False, 'candidate_num': 0}
+train_neg_sample_args: ~
+#initializer_range: 0.02
+#layer_norm_eps: 1.0e-12
+
+log_wandb: True
+wandb_project: 'CBM-project'
+
+
+
+

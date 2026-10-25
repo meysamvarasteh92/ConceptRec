@@ -1,0 +1,136 @@
+# ============================================================
+# DATASET
+# ============================================================
+
+dataset: lastfm
+data_path: './dataset/'
+
+model: SASRec_TopK_SAE
+
+
+# ============================================================
+# SASRec architecture
+# MUST match the pretrained SASRec checkpoint
+# ============================================================
+
+hidden_size: 128
+n_layers: 2
+n_heads: 2
+inner_size: 256
+
+hidden_dropout_prob: 0
+attn_dropout_prob: 0
+
+hidden_act: gelu
+loss_type: CE
+
+layer_norm_eps: 1.0e-12
+initializer_range: 0.02
+
+# ML-1M
+MAX_ITEM_LIST_LENGTH: 50
+
+seed: 2020
+
+download: False
+
+
+# ============================================================
+# PRETRAINED SASRec
+# ============================================================
+
+base_path: saved/SASRec-Oct-05-2026_19-09-24.pth
+
+
+# ============================================================
+# TOP-K SAE
+# ============================================================
+
+# Number of active SAE neurons for each representation
+sae_k: 32
+
+# SAE latent dimension:
+# hidden_size * sae_scale_size
+#
+# ML-1M:
+# 128 * 32 = 4096 latent neurons
+sae_scale_size: 32
+
+
+# Reconstruction / FVU objective
+lambda_recon: 1.0
+
+# Keep 0.0 for a pure Top-k SAE baseline.
+# Set > 0 only if you explicitly want recommendation-fidelity
+# distillation like your Mon_SAE baseline.
+lambda_pred: 0.0
+
+
+# Number of item embeddings sampled when training the SAE.
+# This is mainly relevant if lambda_pred > 0, but can also
+# be used for item reconstruction.
+sae_num_sampled_items: 256
+
+
+# ============================================================
+# STEERING
+# Keep disabled during training
+# ============================================================
+
+steer_neuron_idx: null
+steer_scale: 1.0
+steer_add: 0.0
+
+
+# ============================================================
+# TRAINING
+# ============================================================
+
+epochs: 300
+train_batch_size: 2048
+
+learner: adam
+learning_rate: 1.0e-3
+
+stopping_step: 300
+
+train_neg_sample_args: ~
+
+
+# ============================================================
+# EVALUATION
+# ============================================================
+
+metrics: ['Recall', 'NDCG', 'MRR', 'Hit', 'ItemCoverage', 'ItemCoverageN', 'GiniIndex', 'AveragePopularity']
+
+
+topk: [10, 20]
+
+valid_metric: NDCG@10
+valid_metric_bigger: True
+
+eval_batch_size: 4096
+
+eval_args:
+  split: {LS: valid_and_test}
+  order: TO
+  group_by: user
+  mode:
+    valid: full
+    test: full
+
+
+# ============================================================
+# DATA
+# ============================================================
+
+load_col:
+  inter: [user_id, item_id, rating, timestamp]
+
+
+# ============================================================
+# LOGGING
+# ============================================================
+
+log_wandb: True
+wandb_project: 'TopK-SAE-project'

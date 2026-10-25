@@ -1,0 +1,117 @@
+# ============================================================
+# Dataset / model
+# ============================================================
+
+dataset: ml-1m
+data_path: './dataset/'
+model: sasrec_mon_sae
+
+download: False
+
+
+# ============================================================
+# PRETRAINED SASRec
+#
+# These MUST match the SASRec checkpoint.
+# ============================================================
+
+hidden_size: 128
+
+n_layers: 2
+n_heads: 2
+inner_size: 256
+
+hidden_dropout_prob: 0
+attn_dropout_prob: 0
+
+hidden_act: gelu
+
+MAX_ITEM_LIST_LENGTH: 50
+
+loss_type: CE
+
+layer_norm_eps: 1.0e-12
+initializer_range: 0.02
+
+
+#base_path: saved/sasrec_ml-1m.pth
+base_path: saved/sasrec_ml-1m.pth
+
+log_wandb : True
+wandb_project: 'SASRec_Mon-project'
+
+# ============================================================
+# SAE
+# ============================================================
+
+# Main fair comparison with your 22-concept CBM
+sae_dim: 512
+
+# Reconstruction fidelity
+lambda_emb: 1.0
+
+# Recommendation / interaction fidelity
+lambda_pred: 1.0
+
+# Sparse representation
+lambda_l1: 0.0001
+lambda_kl: 0.01
+
+sae_rho: 0.05
+
+# Start with 256.
+# Later test 0 = full ML-1M catalog.
+sae_num_sampled_items: 256
+
+
+# ============================================================
+# Training
+# ============================================================
+
+learning_rate: 0.001
+
+train_batch_size: 256
+eval_batch_size: 4096
+
+epochs: 3
+stopping_step: 10
+eval_step: 1
+
+
+# ============================================================
+# Evaluation
+# USE THE SAME SETTINGS AS SASRec / CBM
+# ============================================================
+metrics: ['Recall', 'NDCG', 'MRR', 'Hit', 'ItemCoverage', 'ItemCoverageN', 'GiniIndex', 'AveragePopularity']
+
+train_neg_sample_args: ~
+
+topk: [ 10, 20]
+
+valid_metric: NDCG@10
+valid_metric_bigger: True
+
+USER_ID_FIELD: user_id
+ITEM_ID_FIELD: item_id
+TIME_FIELD: timestamp
+
+load_col:
+    inter: [user_id, item_id, timestamp]
+
+
+
+# ============================================================
+# Reproducibility
+# ============================================================
+
+seed: 2020
+reproducibility: True
+
+
+# ============================================================
+# Steering
+# ============================================================
+
+steer_neuron_idx: null
+steer_scale: 1.0
+steer_add: 0.0

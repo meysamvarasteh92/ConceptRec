@@ -1,0 +1,17 @@
+embedding_size: 128              # (int) The embedding size of users and items.
+n_layers: 2                     # (int) The number of layers in LightGCN.
+reg_weight: 1e-05               # (float) The L2 regularization weight.
+input_dim: 128
+seed: 2020
+
+analyze: False
+sae_k: 16
+sae_scale_size: 32
+learning_rate:  1e-3
+valid_metric: "NDCG@10"
+steer: 0
+#"base_path": "./saved/lightgcn_ml-1m.pth"
+"base_path": "./saved/LightGCN-Aug-10-2026_11-13-47.pth"
+# "load": "./saved/sasrec_beer-32-52.pth"
+"alpha": 1.0
+"metrics" : ['Recall', 'NDCG', 'Hit', 'GiniIndex', 'AveragePopularity', 'ItemCoverage', 'ItemCoverageN']

@@ -1,0 +1,49 @@
+## General Hyper Parameters:
+gpu_id : 0
+use_gpu : True
+seed : 2020
+state : INFO
+reproducibility : True
+data_path : dataset
+checkpoint_dir : saved
+show_progress : True
+save_dataset : False
+single_spec : True
+## Training Hyper Parameters:
+epochs : 300
+train_batch_size : 2048
+learner : adam
+learning_rate : 0.001
+train_neg_sample_args:
+  distribution: uniform
+  sample_num: 1
+  alpha: 1.0
+  dynamic: False
+#train_neg_sample_args : ~
+eval_step : 1
+stopping_step : 10
+weight_decay : 0.0
+
+## Evaluation Hyper Parameters:
+#eval_args : {'split': {'LS': 'valid_and_test'}, 'order': 'TO', 'group_by': 'user', 'mode': {'valid': 'full', 'test': 'full'}}
+eval_args : {'split': {'RS': [0.8,0.1,0.1]}, 'order': 'RO', 'group_by': 'user', 'mode': {'valid': 'full', 'test': 'full'}}
+
+metrics : ['Recall', 'NDCG', 'Hit', 'GiniIndex', 'AveragePopularity', 'ItemCoverage', 'ItemCoverageN']
+topk : [10]
+valid_metric : NDCG@10
+eval_batch_size : 4096
+
+## Dataset Hyper Parameters:
+USER_ID_FIELD : user_id
+ITEM_ID_FIELD : item_id
+RATING_FIELD : rating
+TIME_FIELD : timestamp
+
+load_col : {'inter': ['user_id', 'item_id', 'timestamp', 'rating']}
+
+## Model Hyper Parameters:
+n_layers: 2                   # (int) The number of layers in LightGCN.
+
+embedding_size : 128
+reg_weight: 1e-03               # (float) The L2 regularization weight.
+

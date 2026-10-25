@@ -1,0 +1,32 @@
+n_layers: 2                     # (int) The number of transformer layers in transformer encoder.
+n_heads: 2                      # (int) The number of attention heads for multi-head attention layer.
+hidden_size: 128                 # (int) The number of features in the hidden state.
+inner_size: 256                 # (int) The inner hidden size in feed-forward layer.
+hidden_dropout_prob: 0.3        # (float) The probability of an element to be zeroed.
+attn_dropout_prob: 0.3          # (float) The probability of an attention score to be zeroed.
+hidden_act: 'gelu'              # (str) The activation function in feed-forward layer.
+layer_norm_eps: 1e-12           # (float) A value added to the denominator for numerical stability. 
+initializer_range: 0.02         # (float) The standard deviation for normal initialization.
+loss_type: 'CE'                 # (str) The type of loss function. Range in ['BPR', 'CE'].
+
+analyze: False
+sae_k: 44 ## it was 44 for other datasets
+#sae_scale_size: 
+sae_scale_size: 32 ## for beeradvocate dataset
+## it was 32 for other datasets
+learning_rate:  1e-3
+valid_metric: "NDCG@10"
+steer: 0
+#"base_path": "./saved/SASRec-beeradvocate_hiddensize64.pth"
+base_path: "./saved/SASRec-Sep-04-2026_14-07-54.pth"
+#"base_path": "./saved/SASRec-lastfm_final.pth"
+
+## BeerAdvocate size 128 final one "SASRec-Jul-14-2026_12-41-41.pth"
+"alpha": 1.0
+"metrics": ["Recall","NDCG","Hit",  "GiniIndex", "AveragePopularity","ItemCoverage"]
+"input_dim": 128
+## 256 for beeradvocatex
+load_col:                       # (dict) The suffix of atomic files: (list) field names to be loaded.
+    inter: [user_id, item_id, rating, timestamp]
+MAX_ITEM_LIST_LENGTH: 30 ## 30 for lastfm
+
