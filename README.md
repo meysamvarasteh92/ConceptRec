@@ -4,7 +4,7 @@
 ## Framework
 
 <p align="center">
-  <img src="conceptre.pdf" width="850">
+  <img src="conceptrec.pdf" width="850">
 </p>
 
 <p align="center">
