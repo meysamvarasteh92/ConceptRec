@@ -15,6 +15,28 @@ This repository contains the code for **ConceptRec**, a post-hoc framework for i
   <em>Overview of the ConceptRec framework.</em>
 </p>
 
+
+## Environment Setup
+
+Create and activate a Python virtual environment:
+
+```bash
+python3 -m venv conceptrec-env
+source conceptrec-env/bin/activate
+```
+
+Install the required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+To deactivate the environment:
+
+```bash
+deactivate
+```
+
 ## Experiments
 
 - **Datasets:** MovieLens 1M (ML-1M), BeerAdvocate, and LastFM.
